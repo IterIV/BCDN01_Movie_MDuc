@@ -1,0 +1,50 @@
+.home__banner {
+  @apply w-full h-screen relative overflow-hidden;
+}
+.banner__play__icon {
+  @apply flex justify-center items-center w-14 h-14 rounded-full bg-white mx-auto;
+  animation: ripple 1s linear infinite;
+}
+.banner__item::before {
+  content: "";
+  @apply absolute top-0 left-0 w-full h-screen z-10 bg-black/50;
+}
+.banner__img {
+  @apply w-full h-screen object-cover object-center;
+}
+.slick-dots {
+  transform: translateX(25%);
+  @apply inline-block absolute bottom-11 right-0 z-20;
+}
+.slick-dots li {
+  @apply bg-transparent duration-500 mx-1 w-10;
+}
+.slick-dots li p {
+  @apply text-white duration-500;
+}
+
+.slick-dots li.slick-active p {
+  @apply text-4xl text-red-500;
+}
+.slick__next__arrow {
+  bottom: 6%;
+  right: 16%;
+  @apply absolute z-30 cursor-pointer duration-500 text-2xl hover:text-red-500;
+}
+.slick__prev__arrow {
+  bottom: 6%;
+  right: 32%;
+  @apply absolute z-30 cursor-pointer duration-500 text-2xl hover:text-red-500;
+}
+
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 0 rgb(255 255 255 / 25%),
+      0 0 0 10px rgb(255 255 255 / 25%), 0 0 0 20px rgb(255 255 255 / 25%);
+  }
+
+  100% {
+    box-shadow: 0 0 0 10px rgb(255 255 255 / 25%),
+      0 0 0 20px rgb(255 255 255 / 25%), 0 0 0 40px rgba(50, 100, 245, 0);
+  }
+}

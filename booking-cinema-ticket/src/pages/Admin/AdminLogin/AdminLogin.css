@@ -1,0 +1,16 @@
+.ad_login_input_group {
+  @apply relative mb-4;
+}
+.ad_login_icon {
+  @apply absolute top-1/2 left-8 -translate-y-1/2 duration-500;
+}
+.ad_login_input {
+  @apply px-2.5 py-3 pl-14 bg-gray-200 w-full rounded-3xl font-semibold focus-visible:outline-none;
+  min-width: 300px;
+}
+.ad_login_input:focus + .ad_login_icon {
+  @apply -translate-x-2 text-blue-400;
+}
+.ad_login_submit {
+  @apply px-2.5 py-3 hover:bg-blue-600 duration-500 active:bg-blue-500;
+}
