@@ -1,12 +1,9 @@
 import React from "react";
-
-const ButtonPlayVideo = ({ title, handleOnclick }) => {
+import "./ButtonPlayVideo.css";
+const ButtonPlayVideo = ({ className, title, handleOnclick }) => {
   return (
     <>
-      <button
-        className="absolute top-2/3 right-1/4 capitalize z-10"
-        onClick={handleOnclick}
-      >
+      <button onClick={handleOnclick} className={className}>
         <div className="banner__play__icon">
           <i className="fa fa-play text-red-500 text-sm"></i>
         </div>

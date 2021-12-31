@@ -4,28 +4,33 @@ import "./HomeHeader.css";
 
 const HomeHeader = (props) => {
   // TODO component state
-  const [scrollY, setScrollY] = useState(0);
+  const [show, setShow] = useState(false);
 
   // TODO handle event
   const handleScroll = () => {
-    setScrollY(window.scrollY);
+    if (window.scrollY > 90) {
+      setShow(true);
+    } else {
+      setShow(false);
+    }
   };
 
   // TODO useEffect
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   return (
-    <header className={scrollY > 90 ? "bg-gray-900 py-2" : ""}>
+    <header className={show ? "bg-gray-900 py-2" : ""}>
       <div className="flex items-center justify-between container mx-auto ">
         <NavLink
           to="/"
           className={`flex ${
-            scrollY > 90 ? "flex-row" : "flex-col"
+            show ? "flex-row" : "flex-col"
           } items-center p-2 duration-500`}
         >
           <img
@@ -47,7 +52,7 @@ const HomeHeader = (props) => {
                   return props.location.pathname === "/";
                 }}
               >
-                Phim
+                Trang chủ
               </NavLink>
             </li>
             <li className="menu__item">
@@ -62,7 +67,7 @@ const HomeHeader = (props) => {
             </li>
           </ul>
           <div className="items-center flex-shrink-0 hidden lg:flex">
-            <button className="self-center px-7 py-2 font-semibold rounded bg-red-500 text-white">
+            <button className="self-center px-7 py-2 font-semibold rounded bg-red-500 text-white duration-300 hover:bg-red-600 active:bg-red-500">
               Đăng nhập
             </button>
           </div>

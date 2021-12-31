@@ -1,6 +1,11 @@
 .home__banner {
   @apply w-full h-screen relative overflow-hidden;
 }
+.banner__left {
+  left: 10%;
+  z-index: 10;
+}
+
 .banner__play__icon {
   @apply flex justify-center items-center w-14 h-14 rounded-full bg-white mx-auto;
   animation: ripple 1s linear infinite;

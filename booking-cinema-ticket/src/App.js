@@ -26,9 +26,13 @@ function App() {
         <Switch>
           {/* -----------HOME--------------------- */}
           <HomeTemplate exact path="/" component={MainPage} />
-          <HomeTemplate exact path="/detail" component={FilmDetail} />
+          <HomeTemplate exact path="/detail/:maPhim" component={FilmDetail} />
           <HomeTemplate exact path="/schedule" component={Schedule} />
-          <HomeTemplate exact path="/ticket" component={BookTicket} />
+          <HomeTemplate
+            exact
+            path="/ticket/:maLichChieu"
+            component={BookTicket}
+          />
           <Route exact path="/login" component={HomeLogin} />
 
           {/*--------------- ADMIN ---------------- */}

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./AdminLogin.css";
+
 const AdminLogin = () => {
   return (
     <div className="h-screen w-full flex justify-center items-center">
@@ -20,7 +21,7 @@ const AdminLogin = () => {
             <form action="">
               <div className="mt-8">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Email Address
+                  Tài khoản
                 </label>
                 <input
                   className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
@@ -31,7 +32,7 @@ const AdminLogin = () => {
               <div className="mt-4">
                 <div className="flex justify-between">
                   <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Password
+                    Mật khẩu
                   </label>
                 </div>
                 <input

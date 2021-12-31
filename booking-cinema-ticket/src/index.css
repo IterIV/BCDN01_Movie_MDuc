@@ -6,3 +6,8 @@ html,
 body {
   @apply bg-gray-900 text-white;
 }
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}

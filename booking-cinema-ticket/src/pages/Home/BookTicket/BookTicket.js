@@ -1,11 +1,8 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 
-const BookTicket = () => {
-  if (localStorage.getItem("user") === null) {
-    return <Redirect to="/login" />;
-  }
-  return <div>BookTicket</div>;
+const BookTicket = (props) => {
+  return <div>{props.match.params.maLichChieu}</div>;
 };
 
 export default BookTicket;

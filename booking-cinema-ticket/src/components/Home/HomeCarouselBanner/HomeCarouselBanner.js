@@ -33,23 +33,35 @@ const HomeCarouselBanner = () => {
             alt={banner.maPhim}
             className="banner__img"
           />
-          {/* <ButtonPlayVideo
+          <ButtonPlayVideo
+            className="absolute top-2/3 right-1/4 capitalize z-10"
             title="Xem trailer"
             handleOnclick={() => {
               setModalVideo({ videoId: "OB3g37GTALc&t", isOpen: true });
             }}
-          /> */}
-          <button
-            className="absolute top-2/3 right-1/4 capitalize z-10"
-            onClick={() => {
-              setModalVideo({ videoId: "OB3g37GTALc&t", isOpen: true });
-            }}
-          >
-            <div className="banner__play__icon">
-              <i className="fa fa-play text-red-500 text-sm"></i>
+          />
+          <div className="banner__left flex flex-col absolute bottom-11">
+            <div className="flex">
+              <button className="self-center px-7 py-2 font-semibold rounded bg-red-500 text-white duration-300 hover:bg-red-600 active:bg-red-500">
+                Đặt vé
+              </button>
+              <p className="uppercase ml-4 text-sm">
+                Ngày 30/12/2021 <br />
+                Imax3d
+              </p>
             </div>
-            <p className="text-sm mt-6">Xem trailer</p>
-          </button>
+            <div className="flex mt-32">
+              <span className="flex items-center justify-center rounded-full w-7 h-7 bg-white/80 text-black mx-2">
+                <i className="fab fa-facebook-f"></i>
+              </span>
+              <span className="flex items-center justify-center rounded-full w-7 h-7 bg-white/80 text-black mx-2">
+                <i className="fab fa-twitter"></i>
+              </span>
+              <span className="flex items-center justify-center rounded-full w-7 h-7 bg-white/80 text-black mx-2">
+                <i className="fab fa-instagram"></i>
+              </span>
+            </div>
+          </div>
         </div>
       );
     });
@@ -63,7 +75,7 @@ const HomeCarouselBanner = () => {
     dots: true,
     fade: true,
     infinite: true,
-    autoplay: false,
+    autoplay: true,
     autoplaySpeed: 5000,
     slidesToShow: 1,
     slidesToScroll: 1,

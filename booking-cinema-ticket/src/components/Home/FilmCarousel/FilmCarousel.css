@@ -1,7 +1,0 @@
-.film__item {
-  @apply w-1/5 py-4 px-4;
-}
-.film__item img {
-  @apply w-full object-cover object-center rounded-sm;
-  height: 300px;
-}
