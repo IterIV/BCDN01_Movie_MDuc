@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
+import ModalVideo from "react-modal-video";
 
 const FilmCarousel = ({ header, listPhim, history }) => {
+  // TODO State
+  const [modalVieo, setModalVideo] = useState({ videoId: "", isOpen: false });
+
+  // TODO handle Event
+  const handlePlay = (link) => {
+    const params = new URL(link).searchParams;
+    setModalVideo({ videoId: `${params.get("v")}`, isOpen: true });
+  };
+
   // TODO: Render Components
   const renderFilmOpen = () => {
     return listPhim.map((film) => {
@@ -13,17 +23,24 @@ const FilmCarousel = ({ header, listPhim, history }) => {
           >
             <div className="absolute top-0 left-0 w-full h-full opacity-0 bg-black/50 duration-500 active:opacity-50 hover:opacity-100">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-                <button className=" w-10 h-10 rounded-full border-solid border-2 duration-500 hover:bg-white/50 active:bg-white active:text-red-500">
+                <button
+                  onClick={() => {
+                    handlePlay(film.trailer);
+                  }}
+                  className=" w-10 h-10 rounded-full border-solid border-2 duration-500 hover:bg-white/50 active:bg-white active:text-red-500"
+                >
                   <i className="fa fa-play text-sm"></i>
                 </button>
-                <button
-                  className="mt-4 px-2 py-1 duration-500 border-solid border-white border-2  hover:bg-white/30 active:bg-white active:text-red-500"
-                  onClick={() => {
-                    history.push(`/detail/${film.maPhim}`);
-                  }}
-                >
-                  Mua vé
-                </button>
+                {history && (
+                  <button
+                    className="mt-4 px-2 py-1 duration-500 border-solid border-white border-2  hover:bg-white/30 active:bg-white active:text-red-500"
+                    onClick={() => {
+                      history.push(`/detail/${film.maPhim}`);
+                    }}
+                  >
+                    Mua vé
+                  </button>
+                )}
               </div>
             </div>
 
@@ -55,6 +72,13 @@ const FilmCarousel = ({ header, listPhim, history }) => {
     <div className="container">
       <h1 className="uppercase text-xl mt-16">{header}</h1>
       <div className="w-full h-0.5 bg-gradient-to-r from-red-500 to-transparent my-5" />
+      <ModalVideo
+        channel="youtube"
+        autoplay
+        isOpen={modalVieo.isOpen}
+        videoId={modalVieo.videoId}
+        onClose={() => setModalVideo({ ...modalVieo, isOpen: false })}
+      />
       <Slider {...settings}>{renderFilmOpen()}</Slider>
     </div>
   );

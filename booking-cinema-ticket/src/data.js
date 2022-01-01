@@ -12113,3 +12113,63 @@ export const film = {
   ngayKhoiChieu: "2021-12-06T01:32:11.913",
   danhGia: 8,
 };
+export const showTimeByFilm = {
+  heThongRapChieu: [
+    {
+      cumRapChieu: [
+        {
+          lichChieuPhim: [
+            {
+              maLichChieu: "44426",
+              maRap: "536",
+              tenRap: "Rạp 6",
+              ngayChieuGioChieu: "2021-10-02T08:41:59",
+              giaVe: 111111,
+              thoiLuong: 120,
+            },
+          ],
+          maCumRap: "cgv-cgv-saigonres-nguyen-xi",
+          tenCumRap: "CGV - CGV Saigonres Nguyễn Xí",
+          hinhAnh:
+            "https://s3img.vcdn.vn/123phim/2021/01/bhd-star-bitexco-16105952137769.png",
+          diaChi:
+            "Tầng 4-5, Saigonres Plaza, 79/81 Nguyễn Xí, P. 26, Bình Thạnh",
+        },
+        {
+          lichChieuPhim: [
+            {
+              maLichChieu: "44431",
+              maRap: "564",
+              tenRap: "Rạp 4",
+              ngayChieuGioChieu: "2021-10-15T16:00:00",
+              giaVe: 75000,
+              thoiLuong: 120,
+            },
+          ],
+          maCumRap: "cgv-golden-plaza",
+          tenCumRap: "CGV - Golden Plaza",
+          hinhAnh:
+            "https://s3img.vcdn.vn/123phim/2021/01/bhd-star-bitexco-16105952137769.png",
+          diaChi:
+            "Tầng 4, Trung tâm thương mại Golden Plaza, 922 Nguyễn Trãi, P. 14, Q. 5",
+        },
+      ],
+      maHeThongRap: "CGV",
+      tenHeThongRap: "cgv",
+      logo: "https://movienew.cybersoft.edu.vn/hinhanh/cgv.png",
+    },
+  ],
+  maPhim: 8205,
+  tenPhim: "Cá sấu tử thần 2",
+  biDanh: "ca-sau-tu-than-2",
+  trailer: "https://www.youtube.com/embed/H6MLJG0RdDE",
+  hinhAnh:
+    "https://movienew.cybersoft.edu.vn/hinhanh/ca-sau-tu-than-2_gp01.jpg",
+  moTa: "Cặp đôi Eric và Jennifer đã thuyết phục Yolanda, Viktor và Cash cùng nhau lên đường khám phá hệ thống hang động xa xôi, bí ẩn, chưa được biết đến nằm sâu trong khu rừng ở phía Bắc Australia. Trên đường đi, một cơn bão nhiệt đới bất ngờ đến, họ đành phải tìm kiếm trỗ trú ẩn.",
+  maNhom: "GP01",
+  hot: true,
+  dangChieu: true,
+  sapChieu: false,
+  ngayKhoiChieu: "2021-12-06T01:32:11.913",
+  danhGia: 8,
+};

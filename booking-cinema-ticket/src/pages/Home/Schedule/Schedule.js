@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./Schedule.css";
-import Moment from "moment";
 import Slider from "react-slick";
-import { listGroupCinema, listShowTimeByCinema } from "../../../data";
 import _ from "lodash";
-import { Link } from "react-router-dom";
-import moment from "moment";
 import FilmShowTime from "../../../components/Home/FilmShowTime/FilmShowTime";
+import { listGroupCinema, listShowTimeByCinema } from "../../../data";
+import { DateTime } from "../../../ulti/help";
+import { nowString } from "../../../ulti/settings";
 
 const Schedule = () => {
   // TODO State
   const [maRap, setMaRap] = useState("bhd-star-cineplex-bitexco");
-  const now = "2019-01-01";
   // TODO lifeCycle
   useEffect(() => {
     window.scrollTo({
@@ -75,13 +73,10 @@ const Schedule = () => {
       (obj) => obj.maCumRap === maCumRap
     );
     if (cumRap) {
+      const currDate = new DateTime(nowString);
       return cumRap.danhSachPhim.map((phim) => {
         const haveLichChieu = _.find(phim.lstLichChieuTheoPhim, (lichChieu) => {
-          const nowMoment = Moment(now).format("DD/MM/yyyy");
-          const showTime = Moment(lichChieu.ngayChieuGioChieu).format(
-            "DD/MM/yyyy"
-          );
-          return Moment(nowMoment).isSame(showTime);
+          return currDate.isSame(lichChieu.ngayChieuGioChieu, "DD/MM/yyyy");
         });
         if (typeof haveLichChieu === "undefined") {
           return null;
@@ -145,7 +140,7 @@ const Schedule = () => {
         <div className="grid grid-cols-5 gap-5 border-solid border-b-2 border-gray-400/50 py-4">
           {renderCinema()}
         </div>
-        {renderFilmWithShowTime("bhd-star-cineplex-bitexco")}
+        {renderFilmWithShowTime(maRap)}
       </div>
     </main>
   );

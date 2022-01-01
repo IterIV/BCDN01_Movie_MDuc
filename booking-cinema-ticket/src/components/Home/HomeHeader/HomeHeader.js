@@ -34,7 +34,7 @@ const HomeHeader = (props) => {
           } items-center p-2 duration-500`}
         >
           <img
-            src="./assets/img/logo.png"
+            src="/assets/img/logo.png"
             alt="Cinema"
             className="w-10 h-10 mx-3"
           />

@@ -1,44 +1,35 @@
 import _ from "lodash";
-import moment from "moment";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { DateTime } from "../../../ulti/help";
 import { nowString } from "../../../ulti/settings";
 
 const FilmShowTime = ({ phim, cumRap }) => {
   //TODO state
   const [dateSelected, setDateSelected] = useState(nowString);
+
   // TODO: render components
   const renderDate = (numDate) => {
     let arrDate = [];
-    let days = [
-      "Chủ nhật",
-      "Thứ hai",
-      "Thứ ba",
-      "Thứ tư",
-      "Thứ năm",
-      "Thứ sáu",
-      "Thứ 7",
-    ];
+    let currDate = new DateTime(nowString);
     for (let index = 0; index < numDate; index++) {
-      arrDate.push(moment(nowString).add(index, "days"));
+      arrDate.push(currDate.newDate(index));
     }
-    return arrDate.map((momentItem, index) => {
+    return arrDate.map((dateItem, index) => {
       return (
         <div
           key={index}
           onClick={() => {
-            setDateSelected(momentItem.format("DD/MM/yyyy"));
+            setDateSelected(dateItem.date);
           }}
           className={`mt-3 flex px-3 py-1 rounded-md duration-500 cursor-pointer hover:bg-white/20 ${
-            moment(moment(momentItem).format("DD/MM/yyyy")).isSame(dateSelected)
-              ? "bg-white/20"
-              : ""
-          } `}
+            dateItem.isSame(dateSelected, "DD/MM/yyyy") ? "bg-white/20" : ""
+          }`}
         >
           <div className="flex flex-col justify-center items-center">
-            <p className="text-sm">{days[momentItem.get("day")]}</p>
-            <p className="text-5xl font-bold">{momentItem.format("DD")}</p>
-            <p className="text-xs mt-2 pb-1">Tháng {momentItem.format("MM")}</p>
+            <p className="text-sm">{dateItem.getDay("vn")}</p>
+            <p className="text-5xl font-bold">{dateItem.getDate()}</p>
+            <p className="text-xs mt-2 pb-1">Tháng {dateItem.getMonth()}</p>
           </div>
         </div>
       );
@@ -52,24 +43,19 @@ const FilmShowTime = ({ phim, cumRap }) => {
     });
     return _.sortBy(newList, ["ngayChieuGioChieu"], ["desc"]).map(
       (lichChieu) => {
-        const nowMoment = moment(dateSelected).format("DD/MM/yyyy");
-
-        const showTime = moment(lichChieu.ngayChieuGioChieu).format(
-          "DD/MM/yyyy"
-        );
-        const isSelected = moment(nowMoment).isSame(showTime);
-        if (!isSelected) {
-          return null;
-        }
+        const showTime = new DateTime(lichChieu.ngayChieuGioChieu);
+        const isSelected = showTime.isSame(dateSelected, "DD/MM/yyyy");
         return (
-          <button
-            key={lichChieu.maLichChieu}
-            className="bg-white text-gray-900 mx-3 my-3 w-14 h-8 rounded font-semibold duration-500 hover:bg-red-500 hover:text-white"
-          >
-            <Link to={`/ticket/${lichChieu.maLichChieu}`}>
-              {moment(lichChieu.ngayChieuGioChieu).format("HH:mm")}
-            </Link>
-          </button>
+          isSelected && (
+            <button
+              key={lichChieu.maLichChieu}
+              className="bg-white text-gray-900 mx-3 my-3 w-14 h-8 rounded font-semibold duration-500 hover:bg-red-500 hover:text-white"
+            >
+              <Link to={`/ticket/${lichChieu.maLichChieu}`}>
+                {showTime.format("HH:mm")}
+              </Link>
+            </button>
+          )
         );
       }
     );
