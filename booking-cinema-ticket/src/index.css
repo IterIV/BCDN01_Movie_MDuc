@@ -11,3 +11,34 @@ body {
   width: 80%;
   margin: 0 auto;
 }
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: 0.5s ease-in;
+}
+.fade-leave {
+  opacity: 1;
+}
+.fade-leave-active {
+  opacity: 0;
+  transition: 0.5s ease-in;
+}
+
+.ticket__barcode svg {
+  width: 100% !important;
+  height: auto !important;
+}

@@ -2,20 +2,28 @@ import React, { useEffect, useState } from "react";
 import ButtonPlayVideo from "../../../components/Global/ButtonPlayVideo";
 import ModalVideo from "react-modal-video";
 import Slider from "react-slick";
-import { film, listGroupCinema, showTimeByFilm } from "../../../data";
+import {
+  film,
+  listCinemaByGroup,
+  listGroupCinema,
+  showTimeByFilm,
+} from "../../../data";
 import { DateTime } from "../../../ulti/help";
-import { nowString } from "../../../ulti/settings";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
-const FIlmDetail = (props) => {
+const FilmDetail = (props) => {
   // {props.match.params.maPhim}
   // TODO State
   const [modalVieo, setModalVideo] = useState(() => {
     const params = new URL(film.trailer).searchParams;
     return { videoId: params.get("v"), isOpen: false };
   });
-  const [dateSelected, setDateSelected] = useState(nowString);
-  const [maHeThongRap, setMaHeThongRap] = useState("CGV");
+  const [dateSelected, setDateSelected] = useState("2021-10-02");
+  const [currGroupCinema, setCurrGroupCinema] = useState({
+    maHeThongRap: "CGV",
+    hinhAnh: "https://movienew.cybersoft.edu.vn/hinhanh/cgv.png",
+  });
 
   // TODO LifeCycle
   useEffect(() => {
@@ -43,12 +51,15 @@ const FIlmDetail = (props) => {
         <div
           key={cinemaGroup.maHeThongRap}
           onClick={() => {
-            setMaHeThongRap(cinemaGroup.maHeThongRap);
+            setCurrGroupCinema({
+              maHeThongRap: cinemaGroup.maHeThongRap,
+              hinhAnh: cinemaGroup.logo,
+            });
           }}
         >
           <div
             className={`flex justify-center w-full cursor-pointer duration-500 relative hover:opacity-100 ${
-              cinemaGroup.maHeThongRap === maHeThongRap
+              cinemaGroup.maHeThongRap === currGroupCinema.maHeThongRap
                 ? "opacity-100"
                 : "opacity-50"
             }`}
@@ -60,7 +71,7 @@ const FIlmDetail = (props) => {
             />
             <div
               className={`w-2 h-2 bg-red-500 rounded-full absolute top-0 opacity-0 duration-500 ${
-                cinemaGroup.maHeThongRap === maHeThongRap
+                cinemaGroup.maHeThongRap === currGroupCinema.maHeThongRap
                   ? "opacity-100"
                   : "opacity-0"
               }`}
@@ -73,7 +84,7 @@ const FIlmDetail = (props) => {
 
   const renderDate = (numDate) => {
     let arrDate = [];
-    let currDate = new DateTime(nowString);
+    let currDate = new DateTime("2021-10-02");
     for (let index = 0; index < numDate; index++) {
       arrDate.push(currDate.newDate(index));
     }
@@ -98,31 +109,68 @@ const FIlmDetail = (props) => {
     });
   };
 
-  const renderCinema = () => {
-    const currHeThongRap = _.find(
+  const renderShowTime = (maCumRap) => {
+    const heThongRapChieu = _.find(
       showTimeByFilm.heThongRapChieu,
-      (o) => o.maHeThongRap === maHeThongRap
+      (heThongRap) => heThongRap.maHeThongRap === currGroupCinema.maHeThongRap
     );
-    console.log(currHeThongRap);
-
-    if (currHeThongRap) {
-      return currHeThongRap.cumRapChieu.map((cumRap) => {
-        return (
-          <div className="flex items-center">
-            <div
-              key={cumRap.maCumRap}
-              className="flex items-center rounded-md cursor-pointer duration-500 w-52"
+    if (heThongRapChieu) {
+      const cumRap = _.find(
+        heThongRapChieu.cumRapChieu,
+        (cumRap) => cumRap.maCumRap === maCumRap
+      );
+      if (cumRap) {
+        return _.sortBy(
+          cumRap.lichChieuPhim,
+          ["ngayChieuGioChieu"],
+          ["desc"]
+        ).map((lichChieu) => {
+          const showTime = new DateTime(lichChieu.ngayChieuGioChieu);
+          const isSelected = showTime.isSame(dateSelected, "DD/MM/yyyy");
+          if (!isSelected) {
+            return <div className="w-14 h-8 mx-3 my-3" key={0}></div>;
+          }
+          return (
+            <button
+              key={lichChieu.maLichChieu}
+              className="bg-white text-gray-900 mx-3 my-3 w-16 h-8 rounded font-semibold duration-500 hover:bg-red-500 hover:text-white"
             >
-              <p>{cumRap.tenCumRap}</p>
-            </div>
-            <div className="pl-20">
-              <p>Lịch chiếu</p>
+              <Link to={`/ticket/${lichChieu.maLichChieu}`}>
+                {showTime.format("HH:mm")}
+              </Link>
+            </button>
+          );
+        });
+      } else {
+        return <div className="w-14 h-8 mx-3 my-3" key={0}></div>;
+      }
+    }
+    return null;
+  };
+
+  const renderCinema = () => {
+    return listCinemaByGroup.map((groupCinema) => {
+      return (
+        <div
+          className="flex items-center duration-300 hover:bg-white/5"
+          key={groupCinema.maCumRap}
+        >
+          <div className="flex items-center rounded-md w-60">
+            <img
+              src={currGroupCinema.hinhAnh}
+              alt=""
+              className="w-10 rounded-md mr-2 my-3"
+            />
+            <p>{groupCinema.tenCumRap}</p>
+          </div>
+          <div className="ml-12 w-full basis-0 flex-grow flex-shrink border-solid border-b-2 border-gray-400/10">
+            <div className=" w-full flex items-center">
+              {renderShowTime(groupCinema.maCumRap)}
             </div>
           </div>
-        );
-      });
-    }
-    return <></>;
+        </div>
+      );
+    });
   };
 
   return (
@@ -130,10 +178,10 @@ const FIlmDetail = (props) => {
       <div className="w-full h-screen relative">
         <img
           className="w-full h-screen object-cover object-top"
-          src="https://khenphim.com/wp-content/uploads/2020/08/Black-Water-Abyss-3-banner.jpg"
+          src="https://songmoi.vn/Uploads/News/1566138144.jpg"
           alt=""
         />
-        <div className="absolute left-0 top-0 w-full h-screen bg-black/30" />
+        <div className="absolute left-0 top-0 w-full h-screen bg-gradient-to-b from-black/30 via-black/30 to-gray-900" />
         <ButtonPlayVideo
           className="absolute left-1/2 top-1/2"
           handleOnclick={() => {
@@ -148,8 +196,10 @@ const FIlmDetail = (props) => {
           onClose={() => setModalVideo({ ...modalVieo, isOpen: false })}
         />
       </div>
+      <div className="w-full h-10"></div>
+
       <div className="container">
-        <div className="flex mt-16 mb-12 justify-between">
+        <div className="flex mt-10 mb-10 justify-between">
           <div>
             <h2 className="text-xl uppercase font-medium">{film.tenPhim}</h2>
             <p className="text-gray-600">Hành động</p>
@@ -164,7 +214,7 @@ const FIlmDetail = (props) => {
             alt={film.tenPhim}
           />
           <div className="w-full pl-20">
-            <div className="py-4 border-solid border-b-2 border-gray-400/50">
+            <div className="py-4  border-gray-400/50">
               <Slider {...settings}>{renderGroupCinema()}</Slider>
             </div>
             <div className="flex justify-between py-5 border-solid border-b-2 border-gray-400/50">
@@ -178,4 +228,4 @@ const FIlmDetail = (props) => {
   );
 };
 
-export default FIlmDetail;
+export default FilmDetail;

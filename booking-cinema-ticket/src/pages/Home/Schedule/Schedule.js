@@ -131,7 +131,10 @@ const Schedule = () => {
       </div>
       <div className="absolute bottom-0 left-0 right-0 z-0 bg-gradient-to-b from-transparent to-gray-900 h-20" />
 
-      <div className="relative container" style={{ marginTop: "-30%" }}>
+      <div
+        className="relative container"
+        style={{ marginTop: "-30%", marginBottom: "10%" }}
+      >
         <h1 className="uppercase text-xl">Lịch chiếu</h1>
         <div className="w-full h-0.5 bg-gradient-to-r from-red-500 to-transparent my-5" />
         <div className="py-2 border-solid border-b-2 border-gray-400/50">

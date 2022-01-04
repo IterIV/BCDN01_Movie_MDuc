@@ -11,7 +11,12 @@ export class DateTime {
       : this.date.getDate();
   };
   getMonth = () => {
-    return this.date.getMonth() + 1;
+    return this.date.getMonth() + 1 < 10
+      ? `0${this.date.getMonth() + 1}`
+      : this.date.getMonth() + 1;
+  };
+  getShortYear = () => {
+    return this.date.getFullYear();
   };
   getDay = (location) => {
     let days = [
